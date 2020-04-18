@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("PineLog")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Log system that writes to a file.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Alkimus Games")]
 [assembly: AssemblyProduct("PineLog")]
