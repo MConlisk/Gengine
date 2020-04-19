@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 
 using Gengine.System.MathU;
@@ -15,16 +15,16 @@ namespace Gengine.System.Draw
 		public int Rows { get; private set; }
 		public int Columns { get; private set; }
 		public bool IsUniform { get; private set; } 
-		public ArrayList Sprites { get; private set; }
+		public List<Sprite2D> Sprites { get; private set; }
 
-		public SpriteSheet(Bitmap spritesheet, int rows, int columns, bool isUniform, ArrayList metadata = null)
+		public SpriteSheet(Bitmap spritesheet, int rows, int columns, bool isUniform, List<Rectangle> metadata = null)
 		{
 			Log.WriteEntry(this, $"New Sprite sheet created");
 			Spritesheet = spritesheet ?? throw new ArgumentNullException(nameof(spritesheet));
 			Rows = rows;
 			Columns = columns;
 			IsUniform = isUniform;
-			Sprites = new ArrayList();
+			Sprites = new List<Sprite2D>();
 			if (isUniform) Slice(); else MetaSlice(metadata);
 		}
 
@@ -47,7 +47,7 @@ namespace Gengine.System.Draw
 			Log.WriteEntry(this, $"{Spritesheet} was cut into {count} Slices");
 		}
 
-		public void MetaSlice(ArrayList meta)
+		public void MetaSlice(List<Rectangle> meta)
 		{
 			Plot2D plot = new Plot2D();
 			foreach (Rectangle rect in meta)

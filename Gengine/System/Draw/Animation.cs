@@ -9,7 +9,7 @@ using PineLog;
 
 namespace Gengine.System.Draw
 {
-	class Animation : IDisposable
+	public class Animation : IDisposable
 	{
 		private Pinelog Log = new Pinelog();
 		public Sprite2D ActiveSprite { get; private set; }

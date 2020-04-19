@@ -13,6 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LogManager", "LogManager", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PineLog", "PineLog\PineLog.csproj", "{D0152C99-EB8A-4403-9D11-E0F4737F663E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{D33FC55A-B866-46E4-8922-F2EBBE19D8F1}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Downloads\Fighter.png = ..\..\..\Downloads\Fighter.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +43,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{81ED5B5E-F2D5-49A9-8C06-8037736D81C0} = {97A27A2E-6F1F-43B3-8650-3D25405E9A47}
 		{D0152C99-EB8A-4403-9D11-E0F4737F663E} = {A8331165-7B80-4F5D-87B7-CA3DD206FA63}
+		{D33FC55A-B866-46E4-8922-F2EBBE19D8F1} = {97A27A2E-6F1F-43B3-8650-3D25405E9A47}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {573F1872-39F5-42A5-90DB-536B45456950}

@@ -1,14 +1,22 @@
 ﻿using System;
+using System.IO;
+using System.Drawing;
 using System.Windows.Forms;
 using PineLog;
 using Gengine.System.Draw;
+using System.Diagnostics;
 
 namespace SpaceShooterGame
 {
 	public partial class Main : Form
 	{
+		private static readonly string GamePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+		public static Bitmap FighterSheetBitmap;
 		public Pinelog Log = new Pinelog();
-		public SpriteSheet spriteSheet = new Gengine.System.Draw.SpriteSheet
+		public SpriteSheet FighterSheet; 
+		public Animation FighterRun;
+		public Animation FighterAttack;
+		public Animation FighterDie;
 		public Main()
 		{
 			InitializeComponent();
@@ -17,13 +25,21 @@ namespace SpaceShooterGame
 
 		private void InitializeSprites()
 		{
-
+			Stopwatch stopwatch = new Stopwatch();
+			stopwatch.Start();
+			Log.WriteEntry(this, "Start Initializing Sprites");
+			FighterSheetBitmap = new Bitmap(Path.Combine(GamePath, @"Game/Images/Fighter.png"));
+			FighterSheet = new SpriteSheet(FighterSheetBitmap, 8, 32, true);
+			Log.WriteEntry(this, $"Initializing Sprites completed in {stopwatch.ElapsedMilliseconds} milliseconds.");
+			stopwatch.Stop();
 		}
 
 
-		public void Draw()
+		public void Draw(Graphics g)
 		{
-
+			g.Clear(Color.Black);
+			g.DrawImage(FighterSheet.Sprites[2].Sprite, FighterSheet.Sprites[2].Plot.X,FighterSheet.Sprites[2].Plot.Y);
+			
 		}
 
 
@@ -50,9 +66,11 @@ namespace SpaceShooterGame
 		protected override void OnPaint(PaintEventArgs e) // 2
 		{
 			base.OnPaint(e);
-			
+			e.Graphics.Flush();
+			Draw(e.Graphics);
 
 			Invalidate(); // caused onPaint to loop and still finishes OnPaint event
+			//Refresh();
 		}
 
 		protected override void OnValidated(EventArgs e) // ??
