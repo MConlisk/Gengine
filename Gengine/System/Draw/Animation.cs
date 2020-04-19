@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Threading.Tasks;
 using Gengine.System.Sequence;
 using Gengine.System.Sequence.Cycle;
 
@@ -11,7 +11,6 @@ namespace Gengine.System.Draw
 {
 	public class Animation : IDisposable
 	{
-		private Pinelog Log = new Pinelog();
 		public Sprite2D ActiveSprite { get; private set; }
 		public List<Sprite2D> Frames { get; private set; }
 		public Sequencer AnimSequencer { get; private set; }
@@ -21,26 +20,21 @@ namespace Gengine.System.Draw
 
 		public Animation(List<Sprite2D> frames, float fps, int rate, CycleTypes animLoopType)
 		{
+			Pinelog Log = new Pinelog(this);
+			_ = Pinelog.WriteEntry($"New Animation created");
 			Frames = frames;
+			ActiveSprite = frames[0];
 			Type = animLoopType;
 			Fps = fps;
 			Rate = rate;
-			AnimSequencer = new Sequencer(GetImages(Frames), Fps, Frames.Count, 0, Rate, animLoopType);
+			AnimSequencer = new Sequencer(Fps, Frames.Count, 0, Rate, animLoopType);
 			AnimSequencer.Iterated += AnimSequencer_Iterated;
-			Log.WriteEntry(this, $"New Animation created");
 		}
 
-		private void AnimSequencer_Iterated(object sender, SequencerEventArgs args) 
-			=> ActiveSprite.SetBitmap(AnimSequencer.CurrentFrame);
-
-		private ArrayList GetImages(List<Sprite2D> framelist)
+		private void AnimSequencer_Iterated(object sender, SequencerEventArgs args)
 		{
-			ArrayList frameImages = new ArrayList();
-			foreach (Sprite2D sprite in framelist)
-			{
-				frameImages.Add(sprite.Sprite);
-			}
-			return frameImages;
+			_ = Pinelog.WriteEntry($"Animation Iteration: new Frame ID:{AnimSequencer.CurrentFrame}");
+			ActiveSprite.SetBitmap(Frames[AnimSequencer.CurrentFrame].Sprite);
 		}
 
 		public void SetState(AnimationState state)

@@ -10,7 +10,7 @@ namespace Gengine.System.Draw
 {
 	public class SpriteSheet
 	{
-		public Pinelog Log = new Pinelog();
+		public static Pinelog Log;
 		public Bitmap Spritesheet { get; private set; }
 		public int Rows { get; private set; }
 		public int Columns { get; private set; }
@@ -19,7 +19,8 @@ namespace Gengine.System.Draw
 
 		public SpriteSheet(Bitmap spritesheet, int rows, int columns, bool isUniform, List<Rectangle> metadata = null)
 		{
-			Log.WriteEntry(this, $"New Sprite sheet created");
+			Log = new Pinelog(this);
+			_ = Pinelog.WriteEntry($"New Sprite sheet created");
 			Spritesheet = spritesheet ?? throw new ArgumentNullException(nameof(spritesheet));
 			Rows = rows;
 			Columns = columns;
@@ -44,7 +45,7 @@ namespace Gengine.System.Draw
 					count++;
 				}
 			}
-			Log.WriteEntry(this, $"{Spritesheet} was cut into {count} Slices");
+			_ = Pinelog.WriteEntry($"{Spritesheet} was cut into {count} Slices");
 		}
 
 		public void MetaSlice(List<Rectangle> meta)
@@ -54,7 +55,7 @@ namespace Gengine.System.Draw
 			{
 				Sprites.Add(new Sprite2D(Spritesheet.Clone(rect, Spritesheet.PixelFormat), plot, rect.Size));
 			}
-			Log.WriteEntry(this, $"{Spritesheet} was cut into {meta.Count} Slices");
+			_ = Pinelog.WriteEntry($"{Spritesheet} was cut into {meta.Count} Slices");
 		}
 	}
 }

@@ -9,22 +9,19 @@ namespace Gengine.System.Sequence
 {
 	public class Sequencer : IDisposable
 	{
-		public int Index { get; private set; }
-		public Bitmap CurrentFrame { get; private set; }
-		public ArrayList Frames { get; private set; }
+		public int CurrentFrame { get; private set; }
 		public float Fps { get; private set; }
 		public CycleType CycleType { get; private set; }
 
 		private readonly Timer timer = new Timer();
 
-		public Sequencer(ArrayList frames, float fps, int max, int min, int rate, CycleTypes animationStyle)
+		public Sequencer(float fps, int max, int min, int rate, CycleTypes animationStyle)
 		{
-			Frames = frames;
 			Fps = fps;
 			timer.Interval = Fps;
+			CycleType = GetCycleType(animationStyle, max, min, rate);
 			timer.Elapsed += Timer_Elapsed;
 			timer.Enabled = true;
-			CycleType = GetCycleType(animationStyle, max, min, rate);
 		}
 
 		private CycleType GetCycleType(CycleTypes animationStyle, int max, int min, int rate)
@@ -33,8 +30,8 @@ namespace Gengine.System.Sequence
 				CycleTypes.Forward => new Forward(max, min, rate),
 				CycleTypes.Backward => new Reverse(max, min, rate),
 				CycleTypes.Oscillate => new Oscillation(max, min, rate),
-				CycleTypes.None => null,
-				_ => null
+				CycleTypes.None => new Forward(max, min, rate),
+				_ => new Forward(max, min, rate)
 			};
 
 		public void Start() => timer.Start();
@@ -45,10 +42,10 @@ namespace Gengine.System.Sequence
 			CycleType.Increment();
 			OnIteration();
 		}
-		
+
 		public delegate void SequenceEventHandler(object sender, SequencerEventArgs args);
 		public event SequenceEventHandler Iterated;
-		protected virtual void OnIteration() => Iterated?.Invoke(this, new SequencerEventArgs() { CurrentFrame = (Bitmap)Frames[Index], Index = Index });
+		protected virtual void OnIteration() => Iterated?.Invoke(this, new SequencerEventArgs() { CurrentFrame = CycleType.Value });
 
 		#region IDisposable Support
 		private bool disposedValue = false;
@@ -61,7 +58,6 @@ namespace Gengine.System.Sequence
 				{
 					// TODO: dispose managed state (managed objects).
 					timer.Dispose();
-					CurrentFrame.Dispose();
 				}
 
 				// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
@@ -72,11 +68,11 @@ namespace Gengine.System.Sequence
 		}
 
 		// TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-		 ~Sequencer()
-		 {
-		   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-		   Dispose(false);
-		 }
+		~Sequencer()
+		{
+			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+			Dispose(false);
+		}
 
 		// This code added to correctly implement the disposable pattern.
 		public void Dispose()

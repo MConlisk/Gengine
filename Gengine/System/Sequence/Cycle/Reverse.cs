@@ -13,7 +13,6 @@ namespace Gengine.System.Sequence.Cycle
 			Rate = rate >= 0 ? -1 : rate;
 		}
 
-		public override ArrayList GetCollection() => Collection;
 		public override int GetMax() => Max;
 		public override int GetMin() => Min;
 		public override int GetRate() => Rate;
