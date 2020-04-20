@@ -35,9 +35,9 @@ namespace Gengine.System.Draw
 			Size size = new Size(Spritesheet.Width / Columns, Spritesheet.Height / Rows);
 			int count = 0;
 			if (!IsUniform) return;
-			for (int x = 0; x < Columns; x++)
+			for (int y = 0; y < Rows; y++)
 			{
-				for (int y = 0; y < Rows; y++)
+				for (int x = 0; x < Columns; x++)
 				{
 					Point point = new Point(x * size.Width, y * size.Height);
 					Rectangle rectangle = new Rectangle(point, size);

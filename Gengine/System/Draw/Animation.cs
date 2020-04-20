@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading.Tasks;
+using Gengine.System.MathU;
 using Gengine.System.Sequence;
 using Gengine.System.Sequence.Cycle;
 
@@ -11,30 +13,37 @@ namespace Gengine.System.Draw
 {
 	public class Animation : IDisposable
 	{
-		public Sprite2D ActiveSprite { get; private set; }
-		public List<Sprite2D> Frames { get; private set; }
+		public Bitmap ActiveSprite { get; private set; }
+		public List<Bitmap> Frames { get; private set; }
 		public Sequencer AnimSequencer { get; private set; }
 		public float Fps { get; private set; }
 		public int Rate { get; private set; }
 		public CycleTypes Type { get; private set; }
 
-		public Animation(List<Sprite2D> frames, float fps, int rate, CycleTypes animLoopType)
+		public Plot2D Plot = new Plot2D();
+
+		public Animation(List<Bitmap> frames, float fps, int rate, CycleTypes animLoopType)
 		{
 			Pinelog Log = new Pinelog(this);
 			_ = Pinelog.WriteEntry($"New Animation created");
 			Frames = frames;
-			ActiveSprite = frames[0];
+			ActiveSprite = Frames[0];
 			Type = animLoopType;
 			Fps = fps;
 			Rate = rate;
-			AnimSequencer = new Sequencer(Fps, Frames.Count, 0, Rate, animLoopType);
+			AnimSequencer = new Sequencer(Fps, Frames.Count, Rate, animLoopType);
 			AnimSequencer.Iterated += AnimSequencer_Iterated;
 		}
 
 		private void AnimSequencer_Iterated(object sender, SequencerEventArgs args)
 		{
-			_ = Pinelog.WriteEntry($"Animation Iteration: new Frame ID:{AnimSequencer.CurrentFrame}");
-			ActiveSprite.SetBitmap(Frames[AnimSequencer.CurrentFrame].Sprite);
+			ActiveSprite = Frames[AnimSequencer.CurrentFrame];
+		}
+
+		public void FpsAdjustment(float value) 
+		{ 
+			AnimSequencer.AdjustFps(value);
+			_ = Pinelog.WriteEntry($"Animation Fps Adjusted to {AnimSequencer.Fps}");
 		}
 
 		public void SetState(AnimationState state)

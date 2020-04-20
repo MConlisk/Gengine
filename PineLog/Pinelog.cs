@@ -17,22 +17,11 @@ namespace PineLog
 			, DateTime.Now.ToString("MMddyyyy"));
 		}
 
-		public void WriteEntryold(string entry)
-		{
-			string TimeStamp = DateTime.Now.ToString("hh:mm:ss:fff");
-			using (StreamWriter writer = File.CreateText(LogFile))
-			{
-				writer.Write($"[{TimeStamp}-{Header}] {entry}\n");
-			}
-			
-		}
-
 		public static async Task WriteEntry(string entry)
 		{
-			string TimeStamp = DateTime.Now.ToString("hh:mm:ss:fff");
-			using (StreamWriter outputFile = new StreamWriter(LogFile))
+			using (StreamWriter outputFile = File.AppendText(LogFile))
 			{
-				await outputFile.WriteAsync($"[{TimeStamp}-{Header}] {entry}\n");
+				await outputFile.WriteAsync($"[{DateTime.Now:hh:mm:ss:fff}-{Header}] {entry}\n");
 			}
 		}
 	}

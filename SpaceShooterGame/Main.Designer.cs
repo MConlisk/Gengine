@@ -28,10 +28,35 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Text = "Form1";
+			this.SuspendLayout();
+			// 
+			// Main
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+			this.AutoSize = true;
+			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
+			this.BackColor = System.Drawing.Color.Black;
+			this.CausesValidation = false;
+			this.ClientSize = new System.Drawing.Size(784, 561);
+			this.ControlBox = false;
+			this.DoubleBuffered = true;
+			this.Enabled = false;
+			this.Font = new System.Drawing.Font("Games", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ForeColor = System.Drawing.Color.Lime;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			this.ImeMode = System.Windows.Forms.ImeMode.Off;
+			this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			this.Name = "Main";
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.Text = "SimpleGame";
+			this.TopMost = true;
+			this.TransparencyKey = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(2)))), ((int)(((byte)(7)))));
+			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+			this.ResumeLayout(false);
+
 		}
 
 		#endregion

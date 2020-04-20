@@ -15,37 +15,47 @@ namespace Gengine.System.Sequence
 
 		private readonly Timer timer = new Timer();
 
-		public Sequencer(float fps, int max, int min, int rate, CycleTypes animationStyle)
+		public Sequencer(float fps, int max, int rate, CycleTypes animationStyle)
 		{
 			Fps = fps;
-			timer.Interval = Fps;
-			CycleType = GetCycleType(animationStyle, max, min, rate);
+			timer.Interval = 1000 / Fps;
+			CycleType = GetCycleType(animationStyle, max, rate);
 			timer.Elapsed += Timer_Elapsed;
 			timer.Enabled = true;
 		}
 
-		private CycleType GetCycleType(CycleTypes animationStyle, int max, int min, int rate)
+		private CycleType GetCycleType(CycleTypes animationStyle, int max, int rate)
 			=> (animationStyle) switch
 			{
-				CycleTypes.Forward => new Forward(max, min, rate),
-				CycleTypes.Backward => new Reverse(max, min, rate),
-				CycleTypes.Oscillate => new Oscillation(max, min, rate),
-				CycleTypes.None => new Forward(max, min, rate),
-				_ => new Forward(max, min, rate)
+				CycleTypes.Forward => new Forward(max, rate),
+				CycleTypes.Backward => new Reverse(max, rate),
+				CycleTypes.Oscillate => new Oscillation(max, rate),
+				CycleTypes.None => new Forward(max, rate),
+				_ => new Forward(max, rate)
 			};
 
 		public void Start() => timer.Start();
 		public void Stop() => timer.Stop();
 
+		public void AdjustFps(float value)
+		{
+			Fps = (Fps + value) <= 1.0f ? 1.0f : Fps + value;
+			timer.Stop();
+			timer.Interval = Fps;
+			
+			timer.Start();
+		}
+
 		private void Timer_Elapsed(object sender, ElapsedEventArgs e)
 		{
 			CycleType.Increment();
+			CurrentFrame = CycleType.Value;
 			OnIteration();
 		}
 
 		public delegate void SequenceEventHandler(object sender, SequencerEventArgs args);
 		public event SequenceEventHandler Iterated;
-		protected virtual void OnIteration() => Iterated?.Invoke(this, new SequencerEventArgs() { CurrentFrame = CycleType.Value });
+		protected virtual void OnIteration() => Iterated?.Invoke(this, new SequencerEventArgs() { });
 
 		#region IDisposable Support
 		private bool disposedValue = false;

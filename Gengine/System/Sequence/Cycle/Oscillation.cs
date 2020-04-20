@@ -6,16 +6,14 @@ namespace Gengine.System.Sequence.Cycle
 	{
 		private bool Forward = true;
 
-		public Oscillation(int max, int min, int rate)
+		public Oscillation(int max,  int rate)
 		{
 			Max = max;
-			Min = min;
-			Value = Min;
+			Value = 0;
 			Rate = rate <= 0 ? 1 : rate;
 		}
 
 		public override int GetMax() => Max;
-		public override int GetMin() => Min;
 		public override int GetRate() => Rate;
 		public override int GetValue() => Value;
 		public override void Increment()
@@ -28,13 +26,13 @@ namespace Gengine.System.Sequence.Cycle
 				}
 				else
 				{
-					Value = Min;
+					Value = 0;
 					Forward = true;
 				}
 			}
 			else
 			{
-				if (Value - Rate > Min)
+				if (Value - Rate > 0)
 				{
 					Value -= Rate;
 				}

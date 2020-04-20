@@ -5,18 +5,16 @@ namespace Gengine.System.Sequence.Cycle
 	public class Reverse : CycleType
 	{
 
-		public Reverse(int max, int min, int rate)
+		public Reverse(int max, int rate)
 		{
 			Max = max;
-			Min = min;
-			Value = Min;
+			Value = 0;
 			Rate = rate >= 0 ? -1 : rate;
 		}
 
 		public override int GetMax() => Max;
-		public override int GetMin() => Min;
 		public override int GetRate() => Rate;
 		public override int GetValue() => Value;
-		public override void Increment() => Value = (Value - Rate) > Min ? Value - Rate : Max;
+		public override void Increment() => Value = (Value - Rate) > 0 ? Value - Rate : Max;
 	}
 }
