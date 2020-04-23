@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\Draw\AnimationState.cs" />
+    <Compile Include="System\AnimatedGameObject.cs" />
+    <Compile Include="System\MathU\Bools.cs" />
     <Compile Include="System\Sequence\Cycle\CycleTypes.cs" />
     <Compile Include="System\Sequence\Cycle\Forward.cs" />
     <Compile Include="System\Sequence\Cycle\Oscillation.cs" />

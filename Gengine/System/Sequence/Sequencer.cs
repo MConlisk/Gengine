@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Drawing;
 using System.Timers;
 
 using Gengine.System.Sequence.Cycle;
@@ -12,12 +10,16 @@ namespace Gengine.System.Sequence
 		public int CurrentFrame { get; private set; }
 		public float Fps { get; private set; }
 		public CycleType CycleType { get; private set; }
+		public bool IsLooping { get; private set; }
+		public int MaxFrame { get; private set; }
 
 		private readonly Timer timer = new Timer();
 
-		public Sequencer(float fps, int max, int rate, CycleTypes animationStyle)
+		public Sequencer(float fps, int max, int rate, CycleTypes animationStyle, bool isLooping = true)
 		{
 			Fps = fps;
+			MaxFrame = max;
+			IsLooping = isLooping;
 			timer.Interval = 1000 / Fps;
 			CycleType = GetCycleType(animationStyle, max, rate);
 			timer.Elapsed += Timer_Elapsed;
@@ -36,20 +38,28 @@ namespace Gengine.System.Sequence
 
 		public void Start() => timer.Start();
 		public void Stop() => timer.Stop();
-
+		public void Restart()
+		{
+			timer.Stop();
+			CycleType.Value = 0;
+			CurrentFrame = CycleType.Value;
+			timer.Start();
+		}
 		public void AdjustFps(float value)
 		{
-			Fps = (Fps + value) <= 1.0f ? 1.0f : Fps + value;
+			Fps = 1000 / (Fps + value) <= 0.1f ? 0.1f * 1000 : Fps + value;
 			timer.Stop();
-			timer.Interval = Fps;
-			
+			timer.Interval = 1000 / Fps;
 			timer.Start();
 		}
 
 		private void Timer_Elapsed(object sender, ElapsedEventArgs e)
 		{
-			CycleType.Increment();
-			CurrentFrame = CycleType.Value;
+			if (!(!IsLooping && CycleType.Value == MaxFrame - 1))
+			{ 
+				CycleType.Increment();
+				CurrentFrame = CycleType.Value;
+			}
 			OnIteration();
 		}
 

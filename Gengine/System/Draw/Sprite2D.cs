@@ -1,20 +1,24 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 
 using Gengine.System.MathU;
+
+using PineLog;
 
 namespace Gengine.System.Draw
 {
 	public class Sprite2D : IDisposable
 	{
 		public long ID { get; private set; }
+		public Rectangle Location { get; private set; }
 		public Bitmap Sprite { get; private set; }
 		public Plot2D Plot { get; private set; }
 		public Size Hitbox { get; private set; }
 		public Rectangle Bounds => new Rectangle((int)Plot.X, (int)Plot.Y, Hitbox.Width, Hitbox.Height);
 
 		public Sprite2D(Bitmap bitmap, Plot2D plot, Size hitbox)
-		{
+		{ 
 			Hitbox = hitbox;
 			ID = DateTime.Now.Ticks;
 			Sprite = bitmap ?? throw new ArgumentNullException(nameof(bitmap));

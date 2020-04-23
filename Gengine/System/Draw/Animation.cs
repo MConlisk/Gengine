@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading.Tasks;
+
 using Gengine.System.MathU;
 using Gengine.System.Sequence;
 using Gengine.System.Sequence.Cycle;
@@ -22,46 +21,29 @@ namespace Gengine.System.Draw
 
 		public Plot2D Plot = new Plot2D();
 
-		public Animation(List<Bitmap> frames, float fps, int rate, CycleTypes animLoopType)
+		public Animation(List<Bitmap> frames, float fps, int rate, CycleTypes animLoopType, bool isLooping = true)
 		{
-			Pinelog Log = new Pinelog(this);
-			_ = Pinelog.WriteEntry($"New Animation created");
+			_ = Pinelog.WriteEntry(this, $"New Animation created");
 			Frames = frames;
 			ActiveSprite = Frames[0];
 			Type = animLoopType;
 			Fps = fps;
 			Rate = rate;
-			AnimSequencer = new Sequencer(Fps, Frames.Count, Rate, animLoopType);
+			AnimSequencer = new Sequencer(Fps, Frames.Count, Rate, animLoopType, isLooping);
 			AnimSequencer.Iterated += AnimSequencer_Iterated;
 		}
 
-		private void AnimSequencer_Iterated(object sender, SequencerEventArgs args)
-		{
-			ActiveSprite = Frames[AnimSequencer.CurrentFrame];
-		}
+		private void AnimSequencer_Iterated(object sender, SequencerEventArgs args) 
+			=> ActiveSprite = Frames[AnimSequencer.CurrentFrame];
+
+		public void Start() => AnimSequencer.Start();
+		public void Stop() => AnimSequencer.Stop();
+		public void Reset() => AnimSequencer.Restart();
 
 		public void FpsAdjustment(float value) 
 		{ 
 			AnimSequencer.AdjustFps(value);
-			_ = Pinelog.WriteEntry($"Animation Fps Adjusted to {AnimSequencer.Fps}");
-		}
-
-		public void SetState(AnimationState state)
-		{
-			switch (state)
-			{
-				case AnimationState.Activate:
-					AnimSequencer.Start();
-					break;
-
-				case AnimationState.Stop:
-					AnimSequencer.Stop();
-					break;
-
-				default:
-					break;
-
-			};
+			_ = Pinelog.WriteEntry(this, $"Animation Fps Adjusted to {AnimSequencer.Fps}");
 		}
 
 		public void Dispose() => ActiveSprite.Dispose();
