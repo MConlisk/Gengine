@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Gengine.System.Sequence
+namespace Gengine.Core.Sequence
 {
 	public class SequencerEventArgs : EventArgs
 	{

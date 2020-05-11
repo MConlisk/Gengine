@@ -16,8 +16,7 @@ namespace SpaceShooterGame
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			//Application.Run(new Main());
-			Application.Run(new GameWindow());
+			Application.Run(new GameWindow(new System.Drawing.Size(800, 600), "SpaceShooter"));
 		}
 	}
 }

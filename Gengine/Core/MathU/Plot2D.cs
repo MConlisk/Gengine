@@ -1,4 +1,4 @@
-﻿namespace Gengine.System.MathU
+﻿namespace Gengine.Core.MathU
 {
 	public class Plot2D
 	{

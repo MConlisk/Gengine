@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PineLog")]
+[assembly: AssemblyTitle("Pine")]
 [assembly: AssemblyDescription("Log system that writes to a file.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Alkimus Games")]
-[assembly: AssemblyProduct("PineLog")]
+[assembly: AssemblyProduct("Pine")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

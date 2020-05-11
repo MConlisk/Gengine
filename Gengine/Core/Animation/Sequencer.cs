@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Timers;
 
-using Gengine.System.Sequence.Cycle;
+using Gengine.Core.Sequence.Cycle;
 
-namespace Gengine.System.Sequence
+namespace Gengine.Core.Sequence
 {
 	public class Sequencer : IDisposable
 	{
@@ -15,7 +15,7 @@ namespace Gengine.System.Sequence
 
 		private readonly Timer timer = new Timer();
 
-		public Sequencer(float fps, int max, int rate, CycleTypes animationStyle, bool isLooping = true)
+		public Sequencer(float fps, int max, int rate, Types animationStyle, bool isLooping = true)
 		{
 			Fps = fps;
 			MaxFrame = max;
@@ -26,13 +26,13 @@ namespace Gengine.System.Sequence
 			timer.Enabled = true;
 		}
 
-		private CycleType GetCycleType(CycleTypes animationStyle, int max, int rate)
+		private CycleType GetCycleType(Types animationStyle, int max, int rate)
 			=> (animationStyle) switch
 			{
-				CycleTypes.Forward => new Forward(max, rate),
-				CycleTypes.Backward => new Reverse(max, rate),
-				CycleTypes.Oscillate => new Oscillation(max, rate),
-				CycleTypes.None => new Forward(max, rate),
+				Types.Forward => new Forward(max, rate),
+				Types.Backward => new Reverse(max, rate),
+				Types.Oscillate => new Oscillation(max, rate),
+				Types.None => new Forward(max, rate),
 				_ => new Forward(max, rate)
 			};
 

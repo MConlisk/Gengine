@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows;
 
-namespace Gengine.System.MathU
+namespace Gengine.Core.MathU
 {
 	public class Hitbox
 	{

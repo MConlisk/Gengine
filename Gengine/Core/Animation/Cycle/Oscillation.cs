@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace Gengine.System.Sequence.Cycle
+namespace Gengine.Core.Sequence.Cycle
 {
 	public class Oscillation : CycleType
 	{

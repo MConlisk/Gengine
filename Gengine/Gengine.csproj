@@ -41,25 +41,19 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Draw\GameSprite.cs" />
+    <Compile Include="Core\FileWriter.cs" />
+    <Compile Include="Core\Input\InputHandler.cs" />
+    <Compile Include="Core\Animation\AnimationSequence.cs" />
+    <Compile Include="Core\Animation\GameAnimation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="System\Draw\AnimationState.cs" />
-    <Compile Include="System\AnimatedGameObject.cs" />
-    <Compile Include="System\MathU\Bools.cs" />
-    <Compile Include="System\Sequence\Cycle\CycleTypes.cs" />
-    <Compile Include="System\Sequence\Cycle\Forward.cs" />
-    <Compile Include="System\Sequence\Cycle\Oscillation.cs" />
-    <Compile Include="System\Sequence\Cycle\Reverse.cs" />
-    <Compile Include="System\Sequence\Cycle\CycleType.cs" />
-    <Compile Include="System\Sequence\Cycle\ICycle.cs" />
-    <Compile Include="System\Sequence\Sequencer.cs" />
-    <Compile Include="System\Sequence\SequencerEventArgs.cs" />
-    <Compile Include="System\Draw\Animation.cs" />
-    <Compile Include="System\Draw\Sprite2D.cs" />
-    <Compile Include="System\Draw\SpriteSheet.cs" />
-    <Compile Include="System\MathU\Hitbox.cs" />
-    <Compile Include="System\MathU\Plot2D.cs" />
+    <Compile Include="Core\AnimationCollection.cs" />
+    <Compile Include="Core\MathU\Helper.cs" />
+    <Compile Include="Core\MathU\Hitbox.cs" />
+    <Compile Include="Core\MathU\Plot2D.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PineLog\PineLog.csproj">
